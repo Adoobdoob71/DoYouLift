@@ -37,9 +37,16 @@ export default class FitnessCard extends React.Component {
             <BounceButton
               icon="chevron-right"
               iconButton={true}
-              // onPress={() =>
-              //   this.props.navigation.navigate("Post", { Item: this.Item })
-              // }
+              onPress={() =>
+                this.props.navigation.navigate("Post", {
+                  Item: {
+                    ...this.Item,
+                    profileImage: this.state.userDetails.profileImage,
+                    username: this.state.userDetails.username,
+                    email: this.state.userDetails.email,
+                  },
+                })
+              }
             />
           </View>
           <View style={styles.textBox}>

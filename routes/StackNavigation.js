@@ -7,6 +7,7 @@ import Register from "../screens/Register";
 import Login from "../screens/Login";
 import AddPost from "../screens/AddPost";
 import { theme } from "../Theme";
+import AddComment from "../screens/AddComment";
 
 const Stack = createStackNavigator();
 
@@ -22,10 +23,15 @@ export default function StackNavigation() {
         name="BottomNavigation"
         options={{ headerShown: false }}
       />
-      <Stack.Screen component={Post} name="Post" />
+      <Stack.Screen
+        component={Post}
+        name="Post"
+        options={{ headerShown: false }}
+      />
       <Stack.Screen component={Register} name="Register" />
       <Stack.Screen component={Login} name="Login" />
       <Stack.Screen component={AddPost} name="AddPost" />
+      <Stack.Screen component={AddComment} name="AddComment" />
     </Stack.Navigator>
   );
 }

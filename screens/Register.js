@@ -43,37 +43,45 @@ export default class Register extends React.Component {
 
   register = async () => {
     this.setState({ loading: true });
-    try {
-      let user = await (
-        await firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      ).user;
-      let docRef = await firebase.firestore().collection("users").doc(user.uid);
-      docRef.set({
-        username: this.state.username,
-        email: this.state.email,
-        dailySteps: 0,
-      });
-      let storageRef = firebase.storage().ref("users").child(user.uid);
-      let uploadTask = storageRef.put(this.state.image.blob);
-      uploadTask.on("state_changed", (snapshot) => {
-        this.setState({
-          progress: snapshot.bytesTransferred / snapshot.totalBytes,
+    if (this.state.username.trim().length == 0) return;
+    else
+      try {
+        let user = await (
+          await firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+              this.state.email,
+              this.state.password
+            )
+        ).user;
+        let docRef = await firebase
+          .firestore()
+          .collection("users")
+          .doc(user.uid);
+        docRef.set({
+          username: this.state.username.trim(),
+          email: this.state.email,
+          dailySteps: 0,
         });
-      });
-      uploadTask.then(() => {
-        storageRef.getDownloadURL().then((url) => {
-          docRef
-            .update({
-              profileImage: url,
-            })
-            .then(() => this.props.navigation.pop());
+        let storageRef = firebase.storage().ref("users").child(user.uid);
+        let uploadTask = storageRef.put(this.state.image.blob);
+        uploadTask.on("state_changed", (snapshot) => {
+          this.setState({
+            progress: snapshot.bytesTransferred / snapshot.totalBytes,
+          });
         });
-      });
-    } catch (error) {
-      this.setState({ error: error, loading: false });
-    }
+        uploadTask.then(() => {
+          storageRef.getDownloadURL().then((url) => {
+            docRef
+              .update({
+                profileImage: url,
+              })
+              .then(() => this.props.navigation.pop());
+          });
+        });
+      } catch (error) {
+        this.setState({ error: error, loading: false });
+      }
   };
 
   render() {

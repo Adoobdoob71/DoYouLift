@@ -9,7 +9,8 @@ export default function BounceButton(props) {
   const colors = theme.colors;
   return (
     <TouchableOpacity
-      onPress={() => (props.onPress === undefined ? {} : props.onPress())}>
+      onPress={() => (props.onPress === undefined ? {} : props.onPress())}
+      disabled={props.disabled}>
       <LinearGradient
         style={styles.background}
         colors={[colors.accent, colors.primary]}
@@ -18,7 +19,7 @@ export default function BounceButton(props) {
         <MaterialIcons
           name={props.icon}
           color={colors.textOnPrimary}
-          size={18}
+          size={props.size ? props.size : 18}
         />
         {!props.iconButton && <Text style={styles.text}>{props.text}</Text>}
       </LinearGradient>
@@ -28,7 +29,7 @@ export default function BounceButton(props) {
 
 const styles = StyleSheet.create({
   background: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 12,
     flexDirection: "row",

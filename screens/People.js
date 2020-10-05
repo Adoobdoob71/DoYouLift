@@ -21,7 +21,9 @@ export default class People extends React.Component {
       .get()
       .then((snapshot) => {
         snapshot.forEach((item) =>
-          this.setState({ data: [...this.state.data, item.data()] })
+          this.setState({
+            data: [...this.state.data, { ...item.data(), id: item.id }],
+          })
         );
       });
   }
@@ -33,7 +35,9 @@ export default class People extends React.Component {
           data={this.state.data}
           style={styles.flatList}
           showsVerticalScrollIndicator={false}
-          renderItem={({ item }) => <FitnessCard Item={item} />}
+          renderItem={({ item }) => (
+            <FitnessCard Item={item} navigation={this.props.navigation} />
+          )}
           ListHeaderComponent={() => (
             <View style={styles.header}>
               <Text style={styles.textTitle}>

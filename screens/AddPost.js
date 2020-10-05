@@ -5,6 +5,7 @@ import { IconButton, ProgressBar, Snackbar } from "react-native-paper";
 import { theme } from "../Theme";
 import * as ImagePicker from "expo-image-picker";
 import * as firebase from "firebase";
+import BounceButton from "../components/BounceButton";
 
 export default class AddPost extends React.Component {
   constructor(props) {
@@ -75,8 +76,13 @@ export default class AddPost extends React.Component {
           />
           <IconButton
             icon="send"
-            disabled={this.state.loading}
-            color={theme.colors.text}
+            disabled={
+              this.state.loading ||
+              this.state.body.trim().length == 0 ||
+              this.state.title.trim().length == 0 ||
+              this.state.image.blob === null
+            }
+            color={theme.colors.primary}
             onPress={() => this.submitPost()}
           />
         </View>
@@ -94,7 +100,7 @@ export default class AddPost extends React.Component {
             <TextInput
               value={this.state.title}
               onChangeText={(value) => this.setState({ title: value })}
-              autoCapitalize={true}
+              autoCapitalize="sentences"
               style={styles.title}
               placeholderTextColor={theme.colors.placeholder}
               placeholder="Title"
@@ -102,7 +108,7 @@ export default class AddPost extends React.Component {
             <TextInput
               value={this.state.body}
               onChangeText={(value) => this.setState({ body: value })}
-              autoCapitalize={true}
+              autoCapitalize="sentences"
               style={styles.bodyText}
               placeholder="Body"
               placeholderTextColor={theme.colors.placeholder}

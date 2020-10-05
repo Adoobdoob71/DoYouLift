@@ -7,8 +7,8 @@ export const LightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#2DDEB2",
-    accent: "#DAF7A6",
+    primary: "#4568DC",
+    accent: "#B06AB3",
     textOnPrimary: "#ffffff",
   },
 };
@@ -18,8 +18,8 @@ export const DarkTheme = {
   colors: {
     ...PaperDarkTheme.colors,
     surface: "#252525",
-    primary: "#2DDEB2",
-    accent: "#DAF7A6",
+    primary: "#F2994A",
+    accent: "#F2C94C",
     textOnPrimary: "#ffffff",
   },
 };
